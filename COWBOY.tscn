@@ -1,0 +1,676 @@
+[gd_scene load_steps=46 format=2]
+
+[ext_resource path="res://BACKGROUND.png" type="Texture" id=1]
+[ext_resource path="res://cowboyBlue.png" type="Texture" id=2]
+[ext_resource path="res://cowboyRed.png" type="Texture" id=3]
+[ext_resource path="res://ChiKareGo2.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://COWBOY.gd" type="Script" id=5]
+[ext_resource path="res://pause.gd" type="Script" id=6]
+[ext_resource path="res://pointer.png" type="Texture" id=7]
+[ext_resource path="res://mouse.gd" type="Script" id=8]
+[ext_resource path="res://Abel-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://countdown.gd" type="Script" id=10]
+[ext_resource path="res://TextureRect4.gd" type="Script" id=11]
+[ext_resource path="res://TextureRect6.gd" type="Script" id=12]
+[ext_resource path="res://TextureRect5.gd" type="Script" id=13]
+[ext_resource path="res://TextureRect2.gd" type="Script" id=14]
+[ext_resource path="res://TextureRect.gd" type="Script" id=15]
+[ext_resource path="res://TextureRect3.gd" type="Script" id=16]
+[ext_resource path="res://explosiontip1_32x32.png" type="Texture" id=17]
+[ext_resource path="res://HEALTH.png" type="Texture" id=18]
+[ext_resource path="res://pekora.jpg" type="Texture" id=19]
+
+[sub_resource type="DynamicFont" id=25]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 54
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "blue shooting"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 20, 21, 22 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "blue_idle"
+length = 1.75
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.301, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 10, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 16 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "blue_pull"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 17, 18, 19 ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "holster"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 19, 18, 17 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "blue_idle"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "blue_pull"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "blue shooting"
+
+[sub_resource type="AnimationNodeTransition" id=10]
+input_count = 3
+input_0/name = "idle"
+input_0/auto_advance = false
+input_1/name = "pull"
+input_1/auto_advance = false
+input_2/name = "shoot"
+input_2/auto_advance = false
+
+[sub_resource type="AnimationNodeTimeScale" id=13]
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+graph_offset = Vector2( 0, -186.5 )
+nodes/blue/node = SubResource( 7 )
+nodes/blue/position = Vector2( 400, -120 )
+"nodes/bpull /node" = SubResource( 8 )
+"nodes/bpull /position" = Vector2( 580, 0 )
+nodes/bshoot/node = SubResource( 9 )
+nodes/bshoot/position = Vector2( 560, 160 )
+nodes/general/node = SubResource( 10 )
+nodes/general/position = Vector2( 920, -80 )
+nodes/output/position = Vector2( 1260, -140 )
+nodes/shootSpeed/node = SubResource( 13 )
+nodes/shootSpeed/position = Vector2( 760, 120 )
+node_connections = [ "general", 0, "blue", "general", 1, "bpull ", "general", 2, "shootSpeed", "shootSpeed", 0, "bshoot", "output", 0, "general" ]
+
+[sub_resource type="DynamicFont" id=14]
+outline_color = Color( 0.803922, 0.729412, 0.729412, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=15]
+default_font = SubResource( 14 )
+
+[sub_resource type="DynamicFont" id=16]
+outline_size = 2
+outline_color = Color( 0.529412, 0.117647, 0.215686, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="CapsuleShape2D" id=18]
+
+[sub_resource type="Animation" id=4]
+resource_name = "blue shooting"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 21, 22, 23 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "blue_idle"
+length = 1.75
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.301, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 10, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "blue_pull"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 18, 19, 20 ]
+}
+
+[sub_resource type="Animation" id=28]
+resource_name = "holster"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 20, 19, 18 ]
+}
+
+[sub_resource type="DynamicFont" id=21]
+size = 28
+outline_color = Color( 0.113725, 0.054902, 0.054902, 1 )
+use_mipmaps = true
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=24]
+size = 30
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=20]
+resource_name = "click"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 3, 1 ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "boom"
+length = 0.65
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.099, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6 ]
+}
+
+[sub_resource type="DynamicFont" id=17]
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=23]
+resource_name = "click"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 3, 1 ]
+}
+
+[node name="COWBOY" type="Node2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_vertical_guides_": [ -88.0 ]
+}
+
+[node name="game" type="CanvasLayer" parent="."]
+
+[node name="hidden" type="Button" parent="game"]
+visible = false
+margin_left = 120.0
+margin_top = 64.0
+margin_right = 200.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 25 )
+text = "ROUND"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="health" type="Sprite" parent="game"]
+position = Vector2( 30, 120 )
+scale = Vector2( 1.78125, 1.8125 )
+texture = ExtResource( 18 )
+hframes = 2
+vframes = 3
+
+[node name="num3" type="RichTextLabel" parent="game"]
+visible = false
+margin_left = 128.0
+margin_top = 48.0
+margin_right = 275.0
+margin_bottom = 135.0
+size_flags_horizontal = 4
+custom_colors/default_color = Color( 0.945098, 0.941176, 0.572549, 1 )
+custom_colors/font_color_selected = Color( 0.843137, 0.831373, 0.00392157, 1 )
+custom_fonts/normal_font = SubResource( 22 )
+bbcode_enabled = true
+bbcode_text = "[wave amp=60 freq=8] 5
+
+"
+text = " 5
+
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KinematicBody2DB" type="KinematicBody2D" parent="game"]
+
+[node name="Sprite" type="Sprite" parent="game/KinematicBody2DB"]
+position = Vector2( 24, 152 )
+scale = Vector2( 0.4375, 0.46875 )
+texture = ExtResource( 2 )
+hframes = 5
+vframes = 5
+frame = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="game/KinematicBody2DB"]
+root_node = NodePath("../Sprite")
+"anims/blue shooting" = SubResource( 3 )
+anims/blue_idle = SubResource( 1 )
+anims/blue_pull = SubResource( 2 )
+anims/holster = SubResource( 27 )
+
+[node name="AnimationTree" type="AnimationTree" parent="game/KinematicBody2DB"]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/general/current = 0
+parameters/shootSpeed/scale = 1.0
+
+[node name="Button" type="Button" parent="game/KinematicBody2DB"]
+margin_left = 120.0
+margin_top = 24.0
+margin_right = 200.0
+margin_bottom = 72.0
+theme = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+text = "GO!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/KinematicBody2DB"]
+position = Vector2( 24, 152 )
+shape = SubResource( 18 )
+
+[node name="KinematicBody2DR" type="KinematicBody2D" parent="game"]
+
+[node name="Sprite" type="Sprite" parent="game/KinematicBody2DR"]
+position = Vector2( 296, 152 )
+scale = Vector2( 0.4375, 0.46875 )
+texture = ExtResource( 3 )
+flip_h = true
+hframes = 5
+vframes = 5
+frame = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="game/KinematicBody2DR"]
+root_node = NodePath("../Sprite")
+"anims/blue shooting" = SubResource( 4 )
+anims/blue_idle = SubResource( 5 )
+anims/blue_pull = SubResource( 6 )
+anims/holster = SubResource( 28 )
+
+[node name="AnimationTree" type="AnimationTree" parent="game/KinematicBody2DR"]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/general/current = 0
+parameters/shootSpeed/scale = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/KinematicBody2DR"]
+position = Vector2( 296, 152 )
+shape = SubResource( 18 )
+
+[node name="countdown" type="Control" parent="game"]
+visible = false
+margin_left = 72.0
+margin_right = 232.0
+margin_bottom = 40.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+minutes = 1
+seconds = 31
+
+[node name="min" type="RichTextLabel" parent="game/countdown"]
+margin_left = 48.0
+margin_top = -8.0
+margin_right = 80.0
+margin_bottom = 32.0
+size_flags_stretch_ratio = 3.22
+custom_fonts/normal_font = SubResource( 21 )
+text = "00
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sec" type="RichTextLabel" parent="game/countdown"]
+margin_left = 80.0
+margin_top = -8.0
+margin_right = 120.0
+margin_bottom = 32.0
+size_flags_stretch_ratio = 3.22
+custom_fonts/normal_font = SubResource( 21 )
+text = ":00
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="msec" type="RichTextLabel" parent="game/countdown"]
+margin_left = 112.0
+margin_top = -8.0
+margin_right = 152.0
+margin_bottom = 32.0
+size_flags_stretch_ratio = 3.22
+custom_fonts/normal_font = SubResource( 21 )
+text = ":0
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="game/countdown"]
+process_mode = 0
+wait_time = 0.11
+
+[node name="T2" type="Timer" parent="game/countdown"]
+wait_time = 0.98
+
+[node name="Control" type="Control" parent="game"]
+visible = false
+margin_left = 72.0
+margin_top = 24.0
+margin_right = 256.0
+margin_bottom = 184.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="game/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.203922, 0.192157, 0.203922, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="game/Control/ColorRect"]
+modulate = Color( 0.227451, 0.211765, 0.196078, 1 )
+anchor_left = -0.013
+anchor_top = 0.339
+anchor_bottom = 0.339
+margin_right = 184.0
+margin_bottom = 160.0
+texture = ExtResource( 19 )
+expand = true
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="game/Control"]
+anchor_top = 0.35
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/normal_font = SubResource( 24 )
+bbcode_enabled = true
+fit_content_height = true
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="game/Control"]
+modulate = Color( 0.811765, 0.823529, 0.929412, 1 )
+anchor_top = 0.108
+anchor_right = 1.0
+anchor_bottom = 0.345
+placeholder_text = "type here"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="game/Control"]
+margin_right = 16.0
+margin_bottom = 16.0
+expand = true
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="game/Control"]
+margin_left = 16.0
+margin_right = 32.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+expand = true
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="game/Control"]
+margin_left = 32.0
+margin_right = 48.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+expand = true
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="game/Control"]
+margin_left = 48.0
+margin_right = 64.0
+margin_bottom = 16.0
+expand = true
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="game/Control"]
+margin_left = 64.0
+margin_right = 80.0
+margin_bottom = 16.0
+expand = true
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect6" type="TextureRect" parent="game/Control"]
+margin_left = 80.0
+margin_right = 96.0
+margin_bottom = 16.0
+expand = true
+stretch_mode = 1
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mouse" type="Sprite" parent="game"]
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+hframes = 2
+vframes = 2
+frame = 3
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="game/mouse"]
+anims/click = SubResource( 20 )
+
+[node name="boom" type="RigidBody2D" parent="game"]
+visible = false
+mass = 0.00102041
+gravity_scale = 0.0
+
+[node name="Sprite" type="Sprite" parent="game/boom"]
+texture = ExtResource( 17 )
+hframes = 3
+vframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="game/boom/Sprite"]
+playback_speed = 2.3
+anims/boom = SubResource( 26 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.898039, 0.752941, 0.545098, 1 )
+self_modulate = Color( 0.968627, 0.968627, 0.956863, 1 )
+margin_right = 321.0
+margin_bottom = 190.0
+texture = ExtResource( 1 )
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="pause" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+margin_right = 320.0
+margin_bottom = 192.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.380392 )
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/pause/CenterContainer"]
+margin_left = 120.0
+margin_top = 58.0
+margin_right = 200.0
+margin_bottom = 133.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/pause/CenterContainer/VBoxContainer"]
+margin_right = 80.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 17 )
+text = "paused"
+align = 1
+valign = 1
+
+[node name="ResmB" type="Button" parent="CanvasLayer/pause/CenterContainer/VBoxContainer"]
+margin_top = 25.0
+margin_right = 80.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 80, 0 )
+text = "Resume"
+
+[node name="quiTB" type="Button" parent="CanvasLayer/pause/CenterContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 80.0
+margin_bottom = 75.0
+text = "quit"
+
+[node name="mouse" type="Sprite" parent="CanvasLayer/pause"]
+position = Vector2( 120, 58 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+hframes = 2
+vframes = 2
+frame = 3
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/pause/mouse"]
+anims/click = SubResource( 23 )
+
+[connection signal="pressed" from="game/hidden" to="." method="_on_hidden_pressed"]
+[connection signal="animation_finished" from="game/KinematicBody2DB/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="pressed" from="game/KinematicBody2DB/Button" to="." method="_on_Button_pressed"]
+[connection signal="timeout" from="game/countdown/Timer" to="game/countdown" method="_on_Timer_timeout"]
+[connection signal="timeout" from="game/countdown/T2" to="." method="_on_T2_timeout"]
+[connection signal="pressed" from="CanvasLayer/pause/CenterContainer/VBoxContainer/ResmB" to="CanvasLayer/pause" method="_on_ResmB_pressed"]
+[connection signal="pressed" from="CanvasLayer/pause/CenterContainer/VBoxContainer/quiTB" to="CanvasLayer/pause" method="_on_quiTB_pressed"]
